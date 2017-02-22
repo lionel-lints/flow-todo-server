@@ -1,0 +1,22 @@
+{
+  "name": "flow_todos",
+  "version": "0.1.0",
+  "description": "Express API for a small todo app that tracks your flow.",
+  "main": "dist",
+  "scripts": {
+    "start": "node ./bin/www"
+  },
+  "dependencies": {
+    "body-parser": "~1.13.2",
+    "cookie-parser": "~1.3.5",
+    "express": "~4.13.1",
+    "knex": "^0.12.7",
+    "pg": "^6.1.2"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "eslint": "^3.16.0",
+    "mocha": "^3.2.0",
+    "supertest": "^3.0.0"
+  }
+}
