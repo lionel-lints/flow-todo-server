@@ -2,9 +2,9 @@
   "name": "flow_todos",
   "version": "0.1.0",
   "description": "Express API for a small todo app that tracks your flow.",
-  "main": "dist",
+  "main": "./src/app.js",
   "scripts": {
-    "start": "node ./bin/www",
+    "start": "nodemon ./bin/www",
     "lint": "node_modules/eslint/bin/eslint.js"
   },
   "dependencies": {
