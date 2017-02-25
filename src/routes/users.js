@@ -1,33 +1,39 @@
 const express = require('express');
 const tables = require('../db/tables');
+const todos = require('./todos.js');
 
 const router = express.Router();
 
 /* GET users. */
 router.get('/', (req, res) => {
-  tables.Users().then(users => {
+  tables.Users().then((users) => {
     res.json(users);
   });
 });
 
 /* GET a user. */
 router.get('/:id', (req, res, next) => {
-  //get a user.
+  tables.Users().where({ id: req.params.id }).then((user) => {
+    res.json(user);
+  });
 });
 
 /* POST a new user. */
 router.post('/', (req, res, next) => {
-  //post a user.
+  // Post a user.
 });
 
 /* UPDATE a user. */
 router.put('/:id', (req, res, next) => {
-  // update a user here.
+  // Update a user here.
 });
 
 /* Delete a user. */
 router.delete('/:id', (req, res, next) => {
-  // delete a user account here.
+  // Delete a user account here.
 });
+
+/* Add the todo resource for a user*/
+router.use(':id/todos', todos);
 
 module.exports = router;
