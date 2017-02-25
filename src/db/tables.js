@@ -4,27 +4,27 @@ function Users() {
   return knex('users');
 }
 
-function Todo() {
-  return knex('todo');
+function Todos() {
+  return knex('todos');
 }
 
-function Evaluation() {
-  return knex('evaluation');
+function Evaluations() {
+  return knex('evaluations');
 }
 
-function Tag() {
-  return knex('tag');
+function Tags() {
+  return knex('tags');
 }
 
-function TodoTag() {
-  return knex('todo_tag');
+function TodosTags() {
+  return knex('todos_tags');
 }
 
 module.exports = {
   Users,
-  Todo,
-  Evaluation,
-  Tag,
-  TodoTag,
+  Todos,
+  Evaluations,
+  Tags,
+  TodosTags,
 };
 

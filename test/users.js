@@ -72,7 +72,7 @@ describe('user api routes', () => {
     });
   });
 
-  describe('GET /api/users/:id', () => {
+  describe('GET /api/v1/users/:id', () => {
     it('responds with JSON of a user', (done) => {
       request(app)
         .get('/api/v1/users/1')
@@ -95,7 +95,7 @@ describe('user api routes', () => {
     });
   });
 
-  xdescribe('POST /api/users', () => {
+  describe('POST /api/v1/users', () => {
     it('creates a new user', (done) => {
       request(app)
         .post('/api/v1/users')
@@ -110,14 +110,14 @@ describe('user api routes', () => {
         .end(function(err, res) {
           if (err) return done(err);
           expect(res).to.be.json;
-          expect(res.body).to.be.a('object');
-          expect(res.body).to.include({ 
+          expect(res.body).to.be.a('array');
+          expect(res.body).to.containSubset([{
             first_name:"testUser",
             last_name:"lastTest",
             github_id:"506571",
             avatar_url:"https://avatars.githubusercontent.com/u/5067571?v=3",
             email:"adam.someone@example.com"
-          });
+          }]);
           done();
         })
     });

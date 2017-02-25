@@ -20,7 +20,18 @@ router.get('/:id', (req, res, next) => {
 
 /* POST a new user. */
 router.post('/', (req, res, next) => {
-  // Post a user.
+  tables.Users().returning([ 'id', 'created_at', 'updated_at', 'first_name', 'last_name', 'email', 'github_id', 'avatar_url'
+  ]).insert({
+    'created_at': new Date(), 
+    'updated_at': new Date(), 
+    "first_name": req.body.first_name,
+    "last_name": req.body.last_name,
+    "email": req.body.email,
+    "github_id": req.body.github_id,
+    "avatar_url": req.body.avatar_url,
+  }).then((user) => {
+    res.status(201).json(user);
+  });
 });
 
 /* UPDATE a user. */
