@@ -3,14 +3,16 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 
-const api = require('./routes/index.js');
+const routes = require('./routes/index.js');
 
 const app = express();
 
+/* Middleware */
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 
-app.use('/api/v1/', api);
+/* Router */
+app.use('/', routes);
 
 module.exports = app;
