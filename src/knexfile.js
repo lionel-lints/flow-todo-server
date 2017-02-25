@@ -7,14 +7,12 @@ module.exports = {
   },
   test: {
     client: 'pg',
-    connection: {
-      database: 'flow_todos_test',
-    },
+    connection: 'postgres://localhost/flow_todos_test',
     migrations: {
-      directory: path.join(__dirname, '../db/migrations'),
+      directory: path.join(__dirname, '../../db/migrations'),
     },
     seeds: {
-      directory: path.join(__dirname, '../db/seeds'),
+      directory: path.join(__dirname, '../../db/seeds'),
     },
   },
   production: {
