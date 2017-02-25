@@ -1,5 +1,5 @@
 const express = require('express');
-const tables = require('../db/tables');
+const tables = require('../../db/tables');
 const todos = require('./todos.js');
 
 const router = express.Router();
