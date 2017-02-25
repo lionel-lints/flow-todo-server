@@ -174,53 +174,53 @@ describe('user api routes', () => {
     });
   });
 
-  xdescribe('DELETE /api/users/:id', () => {
+  describe('DELETE /api/v1/users/:id', () => {
     it('deletes the specified user, and returns 204(success, no content)', (done) => {
       request(app)
-        .delete('/api/v1/users/1')
+        .del('/api/v1/users/2')
         .end(function(err, res) {
           if (err) return done(err);
           expect(res.status).to.equal(204);
           request(app)
-            .get('/api/users')
+            .get('/api/v1/users')
             .end(function(err, res) {
               if (err) return done(err);
               expect(res).to.be.json;
               expect(res.status).to.equal(200);
               expect(res.body).to.be.a('array');
               expect(res.body.length).to.equal(3);
-              expect(res.body).to.include({ 
-                id: 2,
-                first_name: 'cj',
-                last_name: 'reynolds',
-                github_id: '14241866',
-                avatar_url: 'https://avatars.githubusercontent.com/u/14241866?v=3',
-                email: 'cj.someone@example.com' 
-              });
-              expect(res.body).to.include({ 
+              expect(res.body).to.containSubset([{
                 id: 3,
-                first_name: 'chris',
-                last_name: 'burkhart',
+                first_name: 'Chris',
+                last_name: 'Burkhart',
                 github_id: '53454',
                 avatar_url: 'https://avatars.githubusercontent.com/u/53454?v=3',
-                email: 'chris.someone@example.com'
-              });
-              expect(res.body).to.include({ 
+                email: 'chris@example.com'
+              }]);
+              expect(res.body).to.containSubset([{
+                id: 1,
+                first_name: 'CJ',
+                last_name: 'Reynolds',
+                github_id: '14241866',
+                avatar_url: 'https://avatars.githubusercontent.com/u/14241866?v=3',
+                email: 'cj@example.com' 
+              }]);
+              expect(res.body).to.containSubset([{
                 id: 4,
-                first_name: 'adam',
-                last_name: 'lichty',
+                first_name: 'Adam',
+                last_name: 'Lichty',
                 github_id: '5067571',
                 avatar_url: 'https://avatars.githubusercontent.com/u/5067571?v=3',
-                email: 'adam.someone@example.com' 
-              });
-              expect(res.body).not.to.include({
-                id: 1,
-                first_name: 'lionel',
-                last_name: 'lints',
+                email: 'adam@example.com' 
+              }]);
+              expect(res.body).to.not.containSubset([{
+                id: 2,
+                first_name: 'Lionel',
+                last_name: 'Lints',
                 github_id: '13045341',
                 avatar_url: 'https://avatars.githubusercontent.com/u/13045341?v=3',
-                email: 'lionel.lints@gmail.com',
-              });
+                email: 'lionel@example.com',
+              }]);
               done();
             });
         });

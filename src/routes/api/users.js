@@ -1,4 +1,5 @@
 const express = require('express');
+const moment = require('moment');
 const tables = require('../../db/tables');
 const todos = require('./todos.js');
 
@@ -22,8 +23,8 @@ router.get('/:id', (req, res, next) => {
 router.post('/', (req, res, next) => {
   tables.Users().returning([ 'id', 'created_at', 'updated_at', 'first_name', 'last_name', 'email', 'github_id', 'avatar_url'
   ]).insert({
-    'created_at': new Date(), 
-    'updated_at': new Date(), 
+    'created_at': moment(), 
+    'updated_at': moment(), 
     "first_name": req.body.first_name,
     "last_name": req.body.last_name,
     "email": req.body.email,
@@ -41,7 +42,9 @@ router.put('/:id', (req, res, next) => {
 
 /* Delete a user. */
 router.delete('/:id', (req, res, next) => {
-  // Delete a user account here.
+  tables.Users().where('id', req.params.id).del().then((user) =>{
+    res.sendStatus(204);
+  });
 });
 
 /* Add the todo resource for a user*/
