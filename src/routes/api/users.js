@@ -34,6 +34,6 @@ router.delete('/:id', (req, res, next) => {
 });
 
 /* Add the todo resource for a user*/
-router.use(':id/todos', todos);
+router.use(':user_id/todos', todos);
 
 module.exports = router;

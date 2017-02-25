@@ -10,17 +10,9 @@ const expect = chai.expect;
 
 describe('user api routes', () => {
   beforeEach(() => {
-    return knex.migrate.rollback({ 
-      directory: '../db/migrations' 
-    }).then(() => {
-      return knex.migrate.latest({ 
-        directory: '../db/migrations' 
-      }).then(() => {
-        return knex.seed.run({ 
-          directory: '../db/seeds' 
-        }).then(() => {
-            return true;
-          });
+    return knex.migrate.rollback({ directory: '../db/migrations' }).then(() => {
+      return knex.migrate.latest({ directory: '../db/migrations' }).then(() => {
+        return knex.seed.run({ directory: '../db/seeds' }).then(() => { return 0; });
       });
     });
   });
@@ -28,7 +20,7 @@ describe('user api routes', () => {
   afterEach(() => {
     knex(() => { 
       return knex.migrate.rollback({ directory: '../db/migrations' }).then(() => {
-        return true;
+        return 0;
       });
     });
   });
