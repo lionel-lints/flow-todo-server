@@ -7,7 +7,6 @@ const router = express.Router();
 
 /* GET users. */
 router.get('/', (req, res) => {
-  console.log("request???")
   tables.Users().then((users) => {
     res.json(users);
   }).catch((error) => {
@@ -44,7 +43,6 @@ router.post('/', (req, res, next) => {
 
 /* UPDATE a user. */
 router.put('/:id', (req, res, next) => {
-  // Update a user here.
   const updatedUser = {};
   const returnArray = ['id', 'updated_at'];
   const keyArray = Object.keys(req.body).filter((key) => {

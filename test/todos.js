@@ -134,16 +134,15 @@ describe('todo api routes', () => {
     });
   });
 
-  xdescribe('POST /api/v1/users', () => {
+  describe('POST /api/v1/users/:user_id/todos', () => {
     it('creates a new todo for a user', (done) => {
       request(app)
-        .post('/api/v1/users')
+        .post('/api/v1/users/3/todos')
         .send({ 
-          first_name:"testUser",
-          last_name:"lastTest",
-          github_id:"506571",
-          avatar_url:"https://avatars.githubusercontent.com/u/5067571?v=3",
-          email:"adam.someone@example.com"
+          user_id: 3,
+          title: 'work on new song',
+          description: 'third verse needs revision',
+          complete: false
         })
         .expect(201)
         .end(function(err, res) {
@@ -151,29 +150,26 @@ describe('todo api routes', () => {
           expect(res).to.be.json;
           expect(res.body).to.be.a('array');
           expect(res.body).to.containSubset([{
-            id: 5,
-            user_id: 2,
-            title: 'respond to emails',
-            description: 'make sure to clear out junk mail',
-            due_at: new Date().now,
-            complete: true
+            user_id: 3,
+            title: 'work on new song',
+            description: 'third verse needs revision',
+            complete: false
           }]);
           done();
         })
     });
   });
 
-  xdescribe('PUT /api/v1/users/:id', () => {
+  describe('PUT /api/v1/users/:user_id/todos/:id', () => {
     it('responds with todo id and updated JSON columns', (done) => {
       request(app)
-        .put('/api/v1/users/1')
-        .send({ 
-           id:1,
-           first_name:"newTestUser",
-           last_name:"PUTlastTest",
-           github_id:"33506571",
-           avatar_url:"https://avatars.githubusercontent.com/u/335067571?v=3",
-           email:"newguy.someone@example.com"
+        .put('/api/v1/users/1/todos/2')
+        .send({
+          id: 2,
+          user_id: 1,
+          title: 'no longer contact emily',
+          description: 'complete!',
+          complete: true 
          })
         .end(function(err, res) {
           if (err) return done(err);
@@ -182,28 +178,29 @@ describe('todo api routes', () => {
           expect(res.body).to.be.a('array');
           expect(res.body.length).to.equal(1);
           expect(res.body[0]).to.be.a('object');
-          expect(res.body[0]).to.containSubset({ 
-           first_name:"newTestUser",
-           last_name:"PUTlastTest",
-           github_id:"33506571",
-           avatar_url:"https://avatars.githubusercontent.com/u/335067571?v=3",
-          });
+          expect(res.body).to.containSubset([{
+            id: 2,
+            user_id: 1,
+            title: 'no longer contact emily',
+            description: 'complete!',
+            complete: true 
+          }]);
           done();
         });
     });
 
-    it('does not allow update of ID', (done) => {
-      request(app)        
-        .put('/api/v1/users/2')
-        .send({ 
-          id: 11,
-          first_name:"newTestUser",
-          last_name:"PUTlastTest",
-          github_id:"33506571",
-          avatar_url:"https://avatars.githubusercontent.com/u/335067571?v=3",
-          email:"newguy.someone@example.com"
+    it('does not allow update of ID or the user ID', (done) => {
+      request(app)
+        .put('/api/v1/users/1/todos/2')
+        .send({
+          id: 6,
+          user_id: 1,
+          title: 'no longer contact emily',
+          description: 'complete!',
+          complete: true 
          })
         .end(function(err, res) {
+          if (err) return done(err);
           expect(res.status).to.equal(422);
           expect(res).to.be.json;
           expect(res.body).to.be.a('object');
@@ -212,55 +209,63 @@ describe('todo api routes', () => {
           if (err) return done(err);
           done();      
         });
+      request(app)
+        .put('/api/v1/users/1/todos/2')
+        .send({
+          id: 2,
+          user_id: 2,
+          title: 'no longer contact emily',
+          description: 'complete!',
+          complete: true 
+         })
+        .end(function(err, res) {
+          if (err) return done(err);
+          expect(res.status).to.equal(422);
+          expect(res).to.be.json;
+          expect(res.body).to.be.a('object');
+          expect(res.body).to.have.property('error');
+          expect(res.body['error']).to.equal('You cannot update the user id field.');
+          if (err) return done(err);
+          done();      
+        });
     });
   });
 
-  xdescribe('DELETE /api/v1/users/:user_id/todos/:id', () => {
+  describe('DELETE /api/v1/users/:user_id/todos/:id', () => {
     it('deletes the user\'s specified todo, and returns 204(success, no content)', (done) => {
       request(app)
-        .del('/api/v1/users/2')
+        .del('/api/v1/users/2/todos/4')
         .end(function(err, res) {
           if (err) return done(err);
           expect(res.status).to.equal(204);
           request(app)
-            .get('/api/v1/users')
+            .get('/api/v1/users/2/todos')
             .end(function(err, res) {
               if (err) return done(err);
               expect(res).to.be.json;
               expect(res.status).to.equal(200);
               expect(res.body).to.be.a('array');
-              expect(res.body.length).to.equal(3);
-              expect(res.body).to.containSubset([{
-                id: 3,
-                first_name: 'Chris',
-                last_name: 'Burkhart',
-                github_id: '53454',
-                avatar_url: 'https://avatars.githubusercontent.com/u/53454?v=3',
-                email: 'chris@example.com'
-              }]);
-              expect(res.body).to.containSubset([{
-                id: 1,
-                first_name: 'CJ',
-                last_name: 'Reynolds',
-                github_id: '14241866',
-                avatar_url: 'https://avatars.githubusercontent.com/u/14241866?v=3',
-                email: 'cj@example.com' 
-              }]);
-              expect(res.body).to.containSubset([{
-                id: 4,
-                first_name: 'Adam',
-                last_name: 'Lichty',
-                github_id: '5067571',
-                avatar_url: 'https://avatars.githubusercontent.com/u/5067571?v=3',
-                email: 'adam@example.com' 
-              }]);
+              expect(res.body.length).to.equal(2);
               expect(res.body).to.not.containSubset([{
-                id: 2,
-                first_name: 'Lionel',
-                last_name: 'Lints',
-                github_id: '13045341',
-                avatar_url: 'https://avatars.githubusercontent.com/u/13045341?v=3',
-                email: 'lionel@example.com',
+                id: 4,
+                user_id: 2,
+                title: 'call mom',
+                description: '',
+                complete: false
+              }]);
+              expect(res.body).to.containSubset([{
+                id: 5,
+                user_id: 2,
+                title: 'respond to emails',
+                description: 'make sure to clear out junk mail',
+                complete: true
+              }]);
+              expect(res.body).to.containSubset([{
+                id: 6,
+                user_id: 2,
+                title: 'work on novel',
+                description: 'chapter 2 needs revision',
+                complete: false
               }]);
               done();
             });
