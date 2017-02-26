@@ -7,6 +7,7 @@ const router = express.Router();
 
 /* GET users. */
 router.get('/', (req, res) => {
+  console.log("request???")
   tables.Users().then((users) => {
     res.json(users);
   }).catch((error) => {

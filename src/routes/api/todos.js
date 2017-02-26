@@ -5,7 +5,7 @@ const router = express.Router({mergeParams: true});
 
 /* GET todos listing for a user. */
 router.get('/', (req, res) => {
-  tables.Todos().where('user_id', req.params.user_id).then((todos) =>{
+  tables.Todos().where({ user_id: req.params.user_id }).then((todos) =>{
     res.json(todos);
   }).catch((error) => {
     console.error(error);
@@ -14,7 +14,7 @@ router.get('/', (req, res) => {
 
 /* GET a todo for a user. */
 router.get('/:id', (req, res) => {
-  tables.Todos().where('user_id', req.params.user_id).where('id', req.params.id).then((todo) =>{
+  tables.Todos().where({ user_id: req.params.user_id }).where({ id: req.params.id }).then((todo) =>{
     res.json(todo);
   }).catch((error) => {
     console.error(error);
