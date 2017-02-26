@@ -8,7 +8,7 @@ const app = require('../src/app');
 chai.use(subset);
 const expect = chai.expect;
 
-describe('user api routes', () => {
+describe('todo api routes', () => {
   beforeEach(() => {
     return knex.migrate.rollback({ directory: '../db/migrations' }).then(() => {
       return knex.migrate.latest({ directory: '../db/migrations' }).then(() => {
@@ -25,12 +25,13 @@ describe('user api routes', () => {
     });
   });
 
-  describe('GET /api/v1/users', () => {
-    it('responds with a JSON array of users', (done) => {
+  describe('GET /api/v1/users/1/todos', () => {
+    it('responds with a JSON array of a user\'s todos', (done) => {
       request(app)
-        .get('/api/v1/users')
+        .get('/api/v1/users/1/todos')
         .end(function(err, res) {
           if (err) return done(err);
+          console.log(res.body);
           expect(res).to.be.json;
           expect(res.status).to.equal(200);
           expect(res.body).to.be.a('array');
@@ -72,7 +73,7 @@ describe('user api routes', () => {
     });
   });
 
-  describe('GET /api/v1/users/:id', () => {
+  xdescribe('GET /api/v1/users/:id', () => {
     it('responds with JSON of a user', (done) => {
       request(app)
         .get('/api/v1/users/1')
@@ -95,7 +96,7 @@ describe('user api routes', () => {
     });
   });
 
-  describe('POST /api/v1/users', () => {
+  xdescribe('POST /api/v1/users', () => {
     it('creates a new user', (done) => {
       request(app)
         .post('/api/v1/users')
@@ -123,7 +124,7 @@ describe('user api routes', () => {
     });
   });
 
-  describe('PUT /api/v1/users/:id', () => {
+  xdescribe('PUT /api/v1/users/:id', () => {
     it('responds with user id and updated JSON columns', (done) => {
       request(app)
         .put('/api/v1/users/1')
@@ -175,7 +176,7 @@ describe('user api routes', () => {
     });
   });
 
-  describe('DELETE /api/v1/users/:id', () => {
+  xdescribe('DELETE /api/v1/users/:id', () => {
     it('deletes the specified user, and returns 204(success, no content)', (done) => {
       request(app)
         .del('/api/v1/users/2')
