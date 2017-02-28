@@ -3,6 +3,10 @@
   "version": "0.1.0",
   "description": "Express API for a small todo app that tracks your flow.",
   "main": "./src/app.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lionel-lints/flow-todo-server.git"
+  },
   "scripts": {
     "start": "nodemon ./bin/www",
     "lint": "node_modules/eslint/bin/eslint.js",
@@ -15,6 +19,7 @@
     "helmet": "^3.4.1",
     "knex": "^0.12.7",
     "moment": "^2.17.1",
+    "morgan": "^1.8.1",
     "pg": "^6.1.2"
   },
   "devDependencies": {
@@ -27,5 +32,6 @@
     "eslint-plugin-react": "^6.10.0",
     "mocha": "^3.2.0",
     "supertest": "^3.0.0"
-  }
+  },
+  "license": "ISC"
 }

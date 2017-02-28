@@ -3,12 +3,14 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const helmet = require('helmet');
+const logger = require('morgan');
 
 const routes = require('./routes/index.js');
 
 const app = express();
 
 /* Middleware */
+app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
