@@ -25,12 +25,13 @@ router.get('/:id', (req, res, next) => {
 
 /* POST a new user. */
 router.post('/', (req, res, next) => {
-  tables.Users().returning([ 'id', 'created_at', 'updated_at', 'first_name', 'last_name', 'email', 'github_id', 'avatar_url'
+  tables.Users().returning([ 'id', 'created_at', 'updated_at', 'first_name', 'last_name', 'hashed_password', 'email', 'github_id', 'avatar_url'
   ]).insert({
     'created_at': moment(), 
     'updated_at': moment(), 
     'first_name': req.body.first_name,
     'last_name': req.body.last_name,
+    'hashed_password': req.body.hashed_password,
     'email': req.body.email,
     'github_id': req.body.github_id,
     'avatar_url': req.body.avatar_url,

@@ -1,9 +1,9 @@
 const request = require('supertest');
 const chai =  require('chai');
 const subset = require('chai-subset');
-const knex = require('../src/db/knex');
-const tables = require('../src/db/tables');
-const app = require('../src/app');
+const knex = require('../../src/db/knex');
+const tables = require('../../src/db/tables');
+const app = require('../../src/app');
 
 chai.use(subset);
 const expect = chai.expect;
@@ -37,8 +37,6 @@ describe('todo api routes', () => {
           expect(res.body.length).to.equal(4);
           expect(res.body).to.containSubset([{ 
             id: 1,
-            created_at: null,
-            updated_at: null,
             user_id: 1,
             title: 'clean kitchen',
             description: 'mop the kitchen, sweep the floor.',
@@ -47,8 +45,6 @@ describe('todo api routes', () => {
           }]);
           expect(res.body).to.containSubset([{
             id: 2,
-            created_at: null,
-            updated_at: null,
             user_id: 1,
             title: 'contact emily',
             description: 'email or call her and ask her about the trial outcome thus far.',
@@ -57,8 +53,6 @@ describe('todo api routes', () => {
           }]);
           expect(res.body).to.containSubset([{
             id: 3,
-            created_at: null,
-            updated_at: null,
             user_id: 1,
             title: 'update resume',
             description: 'go over my skills and update them on my resume',
@@ -67,8 +61,6 @@ describe('todo api routes', () => {
           }]);
           expect(res.body).to.containSubset([{
             id: 10,
-            created_at: null,
-            updated_at: null,
             user_id: 1,
             title: '',
             description: '',
