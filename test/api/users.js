@@ -29,6 +29,7 @@ describe('user api routes', () => {
     it('responds with a JSON array of users', (done) => {
       request(app)
         .get('/api/v1/users')
+        .set('Authorization', `Bearer exampleOfAJWTToken`)
         .end(function(err, res) {
           if (err) return done(err);
           expect(res).to.be.json;
@@ -41,7 +42,6 @@ describe('user api routes', () => {
             last_name: 'Burkhart',
             github_id: '53454',
             avatar_url: 'https://avatars.githubusercontent.com/u/53454?v=3',
-            hashed_password: '$2a$12$C9AYYmcLVGYlGoO4vSZTPud9ArJwbGRsJ6TUsNULzR48z8fOnTXbS',
             email: 'chris@example.com'
           }]);
           expect(res.body).to.containSubset([{
@@ -77,6 +77,7 @@ describe('user api routes', () => {
     it('responds with JSON of a user', (done) => {
       request(app)
         .get('/api/v1/users/1')
+        .set('Authorization', `Bearer exampleOfAJWTToken`)
         .end(function(err, res) {
           if (err) return done(err);
           expect(res).to.be.json;
@@ -104,7 +105,7 @@ describe('user api routes', () => {
           first_name:"testUser",
           last_name:"lastTest",
           github_id:"506571",
-          hashed_password: "$2a$12$C9AYYmcLVGYlGoO4vSZTPud9ArJwbGRsJ6TUsNULzR48z8fOnTXbS",
+          hashed_password: "there are things I remember, though I don't remember these",
           avatar_url:"https://avatars.githubusercontent.com/u/5067571?v=3",
           email:"adam.someone@example.com"
         })
@@ -116,7 +117,6 @@ describe('user api routes', () => {
           expect(res.body).to.containSubset([{
             first_name:"testUser",
             last_name:"lastTest",
-            hashed_password: "$2a$12$C9AYYmcLVGYlGoO4vSZTPud9ArJwbGRsJ6TUsNULzR48z8fOnTXbS",
             github_id:"506571",
             avatar_url:"https://avatars.githubusercontent.com/u/5067571?v=3",
             email:"adam.someone@example.com"
@@ -130,6 +130,7 @@ describe('user api routes', () => {
     it('responds with user id and updated JSON columns', (done) => {
       request(app)
         .put('/api/v1/users/1')
+        .set('Authorization', `Bearer exampleOfAJWTToken`)
         .send({ 
            id:1,
            first_name:"newTestUser",
@@ -158,6 +159,7 @@ describe('user api routes', () => {
     it('does not allow update of ID', (done) => {
       request(app)        
         .put('/api/v1/users/2')
+        .set('Authorization', `Bearer exampleOfAJWTToken`)
         .send({ 
           id: 11,
           first_name:"newTestUser",

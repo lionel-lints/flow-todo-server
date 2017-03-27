@@ -1,11 +1,19 @@
 const express = require('express');
-const users = require('./users.js');
 
 const moment = require('moment');
 const jwt = require('jsonwebtoken');
 
+const {encodeToken, decodeToken} = require('./local');
+const { createUser } = require('../../db/helpers');
+
+const register = require('./register');
+
 const router = express.Router();
 
-router.use('/users', users);
+router.use('/register', register);
 
-module.exports = router;
+module.exports = { 
+  decodeToken, 
+  encodeToken,
+  router
+};

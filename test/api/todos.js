@@ -29,6 +29,7 @@ describe('todo api routes', () => {
     it('responds with a JSON array of a user\'s todos', (done) => {
       request(app)
         .get('/api/v1/users/1/todos')
+        .set('Authorization', `Bearer exampleTesterino`)
         .end(function(err, res) {
           if (err) return done(err);
           expect(res).to.be.json;
@@ -76,6 +77,7 @@ describe('todo api routes', () => {
     it('responds with JSON of a user\'s id', (done) => {
       request(app)
         .get('/api/v1/users/2/todos/4')
+        .set('Authorization', `Bearer exampleTesterino`)
         .end(function(err, res) {
           if (err) return done(err);
           expect(res).to.be.json;
@@ -92,6 +94,7 @@ describe('todo api routes', () => {
         });
       request(app)
         .get('/api/v1/users/2/todos/5')
+        .set('Authorization', `Bearer exampleTesterino`)
         .end(function(err, res) {
           if (err) return done(err);
           expect(res).to.be.json;
@@ -108,6 +111,7 @@ describe('todo api routes', () => {
         });
       request(app)
         .get('/api/v1/users/2/todos/6')
+        .set('Authorization', `Bearer exampleTesterino`)
         .end(function(err, res) {
           if (err) return done(err);
           expect(res).to.be.json;
@@ -130,6 +134,7 @@ describe('todo api routes', () => {
     it('creates a new todo for a user', (done) => {
       request(app)
         .post('/api/v1/users/3/todos')
+        .set('Authorization', `Bearer exampleTesterino`)
         .send({ 
           user_id: 3,
           title: 'work on new song',
@@ -156,6 +161,7 @@ describe('todo api routes', () => {
     it('responds with todo id and updated JSON columns', (done) => {
       request(app)
         .put('/api/v1/users/1/todos/2')
+        .set('Authorization', `Bearer exampleTesterino`)
         .send({
           id: 2,
           user_id: 1,
@@ -184,6 +190,7 @@ describe('todo api routes', () => {
     it('does not allow update of ID or the user ID', (done) => {
       request(app)
         .put('/api/v1/users/1/todos/2')
+        .set('Authorization', `Bearer exampleTesterino`)
         .send({
           id: 6,
           user_id: 1,
@@ -203,6 +210,7 @@ describe('todo api routes', () => {
         });
       request(app)
         .put('/api/v1/users/1/todos/2')
+        .set('Authorization', `Bearer exampleTesterino`)
         .send({
           id: 2,
           user_id: 2,
@@ -227,6 +235,7 @@ describe('todo api routes', () => {
     it('deletes the user\'s specified todo, and returns 204(success, no content)', (done) => {
       request(app)
         .del('/api/v1/users/2/todos/4')
+        .set('Authorization', `Bearer exampleTesterino`)
         .end(function(err, res) {
           if (err) return done(err);
           expect(res.status).to.equal(204);

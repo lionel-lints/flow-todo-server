@@ -8,6 +8,7 @@ const cors = require('cors');
 const helmet = require('helmet');
 const logger = require('morgan');
 
+
 const routes = require('./routes/index.js');
 
 const app = express();
@@ -25,6 +26,7 @@ app.use(cors({
   methods: ['GET','PUT','POST','DELETE','OPTIONS'],
   allowedHeaders: ['Authorization', 'Content-Type']
 }));
+
 
 /* Router */
 app.use('/', routes);

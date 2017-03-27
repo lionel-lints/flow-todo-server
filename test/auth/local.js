@@ -9,7 +9,7 @@ const localAuth = require('../../src/routes/auth/local');
 chai.use(subset);
 const expect = chai.expect;
 
-describe('auth : local', () => {
+describe('local auth functions', () => {
 
   describe('encodeToken()', () => {
     it('responds with a token', (done) => {

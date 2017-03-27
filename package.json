@@ -13,6 +13,7 @@
     "test": "NODE_ENV=test mocha ./test/**/*.js"
   },
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "body-parser": "~1.16.1",
     "cookie-parser": "~1.4.3",
     "cors": "^2.8.1",
